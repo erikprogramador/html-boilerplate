@@ -3,6 +3,8 @@ import sass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
 import cssNano from 'gulp-cssnano';
 import eslint from 'gulp-eslint';
+import babel from 'gulp-babel';
+import uglify from 'gulp-uglify';
 
 const app = './app/';
 
@@ -50,4 +52,18 @@ gulp.task('eslint', () => {
   return gulp.src(lint)
     .pipe(eslint())
     .pipe(eslint.format());
+});
+
+gulp.task('scripts', ['eslint'], () => {
+  return gulp.src(javascriptFiles)
+    .pipe(babel())
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('workers', ['eslint'], () => {
+  return gulp.src(serviceWorkers)
+    .pipe(babel())
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/service-worker'));
 });
