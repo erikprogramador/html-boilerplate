@@ -1,9 +1,5 @@
 'use strict';
 
-class Application {
-  constructor() {
-    // Code here
-  }
-}
+class Application {}
 
 new Application();
