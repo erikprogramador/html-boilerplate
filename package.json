@@ -34,9 +34,11 @@
     "gulp-htmlmin": "^2.0.0",
     "gulp-imagemin": "^3.0.1",
     "gulp-sass": "^2.3.2",
-    "gulp-uglify": "^1.5.3"
+    "gulp-uglify": "^1.5.3",
+    "sw-precache": "^3.2.0"
   },
   "dependencies": {
-    "normalize.css": "^4.1.1"
+    "normalize.css": "^4.1.1",
+    "sw-toolbox": "^3.2.1"
   }
 }
