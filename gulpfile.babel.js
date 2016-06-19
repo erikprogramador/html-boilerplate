@@ -5,6 +5,7 @@ import cssNano from 'gulp-cssnano';
 import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
 import uglify from 'gulp-uglify';
+import htmlmin from 'gulp-htmlmin';
 
 const app = './app/';
 
@@ -40,6 +41,10 @@ const lint = [
   app + '/service-worker/register.js'
 ];
 
+const htmlFiles = [
+  app + '**/*.html'
+];
+
 gulp.task('sass', () => {
   return gulp.src(sassFiles)
     .pipe(sass().on('error', sass.logError))
@@ -66,4 +71,10 @@ gulp.task('workers', ['eslint'], () => {
     .pipe(babel())
     .pipe(uglify())
     .pipe(gulp.dest('dist/service-worker'));
+});
+
+gulp.task('html', () => {
+  return gulp.src(htmlFiles)
+    .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
+    .pipe(gulp.dest('dist'));
 });
