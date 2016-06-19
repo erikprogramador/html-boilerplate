@@ -6,6 +6,7 @@ import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
 import uglify from 'gulp-uglify';
 import htmlmin from 'gulp-htmlmin';
+import imagemin from 'gulp-imagemin';
 
 const app = './app/';
 
@@ -45,6 +46,10 @@ const htmlFiles = [
   app + '**/*.html'
 ];
 
+const imagesFiles = [
+  'app/images/**/*'
+];
+
 gulp.task('sass', () => {
   return gulp.src(sassFiles)
     .pipe(sass().on('error', sass.logError))
@@ -77,4 +82,10 @@ gulp.task('html', () => {
   return gulp.src(htmlFiles)
     .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('images', () => {
+  return gulp.src(imagesFiles)
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist/images'));
 });
