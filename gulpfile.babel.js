@@ -15,6 +15,7 @@ import imagemin from 'gulp-imagemin';
 import browserSync from 'browser-sync';
 import runSequence from 'run-sequence';
 import clean from 'gulp-clean';
+import concat from 'gulp-concat';
 
 /**
  * Developer folder
@@ -26,6 +27,11 @@ const app = './app/';
  * reload the browse
  */
 const reload = browserSync.reload;
+
+/**
+ * External libs
+ */
+const external = './node_modules/';
 
 /**
  * List all the browser what will be supported
@@ -56,6 +62,7 @@ const sassFiles = [
  * @type {Array}
  */
 const javascriptFiles = [
+  app + '/js/sw/register.js',
   app + '/js/main.js'
 ];
 
@@ -64,8 +71,8 @@ const javascriptFiles = [
  * @type {Array}
  */
 const serviceWorkers = [
-  app + '/service-worker/service-worker.js',
-  app + '/service-worker/register.js'
+  external + '/sw-toolbox/sw-toolbox.js',
+  app + '/service-worker.js'
 ];
 
 /**
@@ -74,8 +81,8 @@ const serviceWorkers = [
  */
 const lint = [
   app + '/js/main.js',
-  app + '/service-worker/service-worker.js',
-  app + '/service-worker/register.js'
+  app + '/js/register.js',
+  app + '/service-worker.js'
 ];
 
 /**
@@ -127,11 +134,12 @@ gulp.task('scripts', ['eslint'], () => {
 /**
  * Compile and minify all worker
  */
-gulp.task('workers', ['eslint'], () => {
+gulp.task('workers', () => {
   return gulp.src(serviceWorkers)
     .pipe(babel())
+    .pipe(concat('service-worker.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('dist/service-worker'));
+    .pipe(gulp.dest('dist'));
 });
 
 /**
@@ -182,7 +190,7 @@ gulp.task('serve', ['default'], () => {
   gulp.watch(['app/**/*.html'], ['html', reload]);
   gulp.watch(['app/sass/**/*.{sass, scss}'], ['sass', reload]);
   gulp.watch(['app/js/**/*.js'], ['scripts', reload]);
-  gulp.watch(['app/service-worker/**/*.js'], ['workers', reload]);
+  gulp.watch(['app/service-worker.js'], ['workers', reload]);
   gulp.watch(['app/images/**/*'], ['images', reload]);
 });
 
