@@ -28,7 +28,6 @@ const AUTOPREFIXER_BROWSERS = [
 
 const sassFiles = [
   app + 'sass/main.sass',
-  app + 'sass/media.sass',
 ];
 
 const javascriptFiles = [
@@ -104,11 +103,11 @@ gulp.task('serve', ['default'], () => {
     port: 3000
   });
 
-  gulp.watch([htmlFiles], ['html', reload]);
-  gulp.watch([sassFiles], ['sass', reload]);
-  gulp.watch([javascriptFiles], ['scripts', reload]);
-  gulp.watch([serviceWorkers], ['workers', reload]);
-  gulp.watch([imagesFiles], ['images', reload]);
+  gulp.watch(['app/**/*.html'], ['html', reload]);
+  gulp.watch(['app/sass/**/*.{sass, scss}'], ['sass', reload]);
+  gulp.watch(['app/js/**/*.js'], ['scripts', reload]);
+  gulp.watch(['app/service-worker/**/*.js'], ['workers', reload]);
+  gulp.watch(['app/images/**/*'], ['images', reload]);
 });
 
 gulp.task('default', () => {
