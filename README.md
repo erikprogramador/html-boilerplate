@@ -30,4 +30,3 @@ If you are on dev enviroment run `gulp serve` to start a server.
 If you need a production code run `gulp` and all files will be compiled to dist folder.
 
 __Always the files will be compiled to dist folder. But on the dev server always you save a file will be recompiled and the browser reload.__
-# html-boilerplate
