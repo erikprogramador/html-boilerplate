@@ -7,8 +7,12 @@ import babel from 'gulp-babel';
 import uglify from 'gulp-uglify';
 import htmlmin from 'gulp-htmlmin';
 import imagemin from 'gulp-imagemin';
+import browserSync from 'browser-sync';
+import runSequence from 'run-sequence';
+import clean from 'gulp-clean';
 
 const app = './app/';
+const reload = browserSync.reload;
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -88,4 +92,30 @@ gulp.task('images', () => {
   return gulp.src(imagesFiles)
     .pipe(imagemin())
     .pipe(gulp.dest('dist/images'));
+});
+
+
+gulp.task('serve', ['default'], () => {
+  browserSync({
+    notify: false,
+    logPrefix: 'WSK',
+    baseDir: './dist',
+    server: ['dist'],
+    port: 3000
+  });
+
+  gulp.watch([htmlFiles], ['html', reload]);
+  gulp.watch([sassFiles], ['sass', reload]);
+  gulp.watch([javascriptFiles], ['scripts', reload]);
+  gulp.watch([serviceWorkers], ['workers', reload]);
+  gulp.watch([imagesFiles], ['images', reload]);
+});
+
+gulp.task('default', () => {
+  return runSequence('clean', ['html', 'sass', 'scripts', 'workers', 'images']);
+});
+
+gulp.task('clean', () => {
+  return gulp.src('dist')
+    .pipe(clean());
 });
