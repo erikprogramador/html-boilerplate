@@ -87,6 +87,11 @@ gulp.task('html', () => {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('manifest', () => {
+  return gulp.src(app + 'manifest.json')
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('images', () => {
   return gulp.src(imagesFiles)
     .pipe(imagemin())
@@ -111,7 +116,7 @@ gulp.task('serve', ['default'], () => {
 });
 
 gulp.task('default', () => {
-  return runSequence('clean', ['html', 'sass', 'scripts', 'workers', 'images']);
+  return runSequence('clean', ['manifest','html', 'sass', 'scripts', 'workers', 'images']);
 });
 
 gulp.task('clean', () => {
