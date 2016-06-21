@@ -26,7 +26,7 @@ All Using Gulp to compile all this files.
     + service-worker.js
 
 ## Running
-Running `npm install`.
+Running `npm install`.   
 If you are on dev enviroment run `gulp serve` to start a server.  
 If you need a production code run `gulp` and all files will be compiled to dist folder.
 
